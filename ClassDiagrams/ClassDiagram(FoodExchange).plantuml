@@ -1,0 +1,102 @@
+@startuml classDiagram{
+    skinparam classAttributeIconSize 0
+
+    ' Abstraction
+    abstract class Organisation{
+        # id: int
+        # name: string
+        # organisationType: list
+        # email: string
+        # nameOfContactPerson: string
+        # address: string
+        # city: string
+        # county: list
+        # eircode: string
+        # password: string
+
+        # Register()
+    }
+
+    ' Regular classes
+    class Account{
+        # DeleteAccount()
+    }
+
+    class Business{
+        # Donate()
+    }
+
+    class Charity{
+        # Request()
+    }
+
+    class Volunteer{
+        - id: int
+        - name: string
+        - email: string
+        - phone: string
+        
+    }
+
+    class Donation{
+        # categories: list
+        # donationId: int
+        # itemId: int
+        # description: string
+        # sellByDate: date
+        # useByDate: date
+        # quantity: int
+        # deliveryDateAndTime: datetime
+
+        # Submit()
+        # IsAcceptable()
+        # AcceptDonation()
+        # DeclineDonation()
+        # AddDonation()
+    }
+
+    class BarcodeScanner{
+        # OpenCamera()
+        # ScanImage()
+        # Save()
+        # Autofill()
+    }
+
+    class ActiveDonationList{
+        # ViewDonation()
+        # RemoveDonation()
+    }
+
+    class DonationRequestList{
+        # requestId: int
+        # organisationEmail: string
+        # quantityRequired: int
+
+        # AddRequest()
+        # RemoveRequest()
+    }
+
+    ' Inheritance
+    Organisation <|-- Account
+    Organisation <|-- Business
+    Organisation <|-- Charity
+
+    ' Associations
+    ActiveDonationList "1" ---> "1..*  " DonationRequestList
+    Business "1..* " -->  "0..* " Donation
+    Volunteer "0..* " --> "1" ActiveDonationList
+    Charity "0..* " --> "1 " ActiveDonationList
+    Business "1 " --> "1  " Account
+    Charity "1  " --> "1" Account
+
+
+    ' Aggregations
+    Volunteer "0..* " o-- "1..* " DonationRequestList
+    Donation "0..* " o-- "1   " ActiveDonationList
+
+
+    ' Compositions
+    Donation *-- BarcodeScanner
+    
+}
+@enduml

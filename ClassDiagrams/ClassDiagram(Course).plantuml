@@ -1,0 +1,29 @@
+@startuml classDiagram{
+    skinparam classAttributeIconSize 0
+
+    abstract class Course{
+        -taughtBy: string
+        +addStudent()
+        +removeStudent()
+    }
+    
+    class List{
+
+    }
+
+    class Lecturer{
+        -name: string
+        -id: int
+    }
+
+    class Student{
+        -name: string
+        -id :int
+        -dob: date
+        -course: string
+    }
+
+    Course "1..*" --|> List
+    List  --|> "1..*" Student
+    List --|>"1" Lecturer
+}

@@ -1,0 +1,19 @@
+@startuml stateDiagram
+
+state MemberLogIn
+state BookFlights
+state EnterPassengerDetails
+state EnterCreditCardDetails
+state PaymentConfirmed
+state DisplayReservationNumber
+state ReceiveETicket
+
+[*] --> MemberLogIn
+MemberLogIn --> BookFlights : Select destination \nSelect dates
+BookFlights --> EnterPassengerDetails : Enter details
+BookFlights --> EnterCreditCardDetails : Payment \nPassenger details already saved
+EnterPassengerDetails --> EnterCreditCardDetails : Payment
+EnterCreditCardDetails --> PaymentConfirmed : Transaction authorised
+PaymentConfirmed --> DisplayReservationNumber : Confirmation screen
+PaymentConfirmed --> ReceiveETicket : Email sent
+ReceiveETicket --> [*] : Transaction complete

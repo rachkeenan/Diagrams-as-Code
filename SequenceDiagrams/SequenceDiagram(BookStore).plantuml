@@ -1,0 +1,58 @@
+@startuml sequenceDiagram
+
+actor Customer
+participant BookStore
+database Books
+
+Customer --> BookStore : Browse()
+activate Customer
+BookStore --> Books : Query()
+activate BookStore
+activate Books
+Books --> BookStore : returnResults()
+deactivate Books
+BookStore --> Customer : Lists books
+deactivate BookStore
+Customer --> BookStore : Selects a book
+activate BookStore
+Customer --> BookStore : AddToBasket()
+deactivate BookStore
+
+Customer --> BookStore : Browse()
+BookStore --> Books : Query()
+activate BookStore
+activate Books
+Books --> BookStore : returnResults()
+deactivate Books
+BookStore --> Customer : Lists books
+deactivate BookStore
+
+Customer --> BookStore : Selects a book
+activate BookStore
+Customer --> BookStore : AddToBasket()
+deactivate BookStore
+
+Customer --> BookStore : ViewBasket()
+activate BookStore
+BookStore --> Customer : ReturnsBasketList()
+
+Customer --> BookStore : Checkout()
+BookStore --> Customer : RequestLogin()
+
+Customer --> Customer : Login/Register
+
+BookStore --> Customer : Confirm delivery details
+Customer --> BookStore : Update delivery details
+BookStore --> Customer : Request payment information
+Customer --> BookStore : Input payment information
+Customer --> BookStore : Place order
+
+BookStore --> BookStore : Verify payment
+BookStore --> BookStore : Process order
+BookStore --> Customer : Confirm order
+deactivate Customer
+
+BookStore --> Customer : Provide delivery information
+deactivate BookStore
+
+@enduml

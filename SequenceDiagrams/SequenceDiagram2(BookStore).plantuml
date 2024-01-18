@@ -1,0 +1,18 @@
+@startuml sequenceDiagram
+
+actor Customer #LightBlue
+participant BookStore as "Book Store" #LightGreen
+database BookDatabase as "Books" #LightCoral
+
+Customer -> Customer : Initialise()
+activate Customer
+Customer -> BookStore : Browse()
+BookStore -> BookDatabase : Query()
+activate BookStore
+activate BookDatabase
+BookDatabase -> BookStore : Result()
+deactivate BookDatabase
+
+BookStore -> Customer : BookList()
+deactivate BookStore
+deactivate Customer

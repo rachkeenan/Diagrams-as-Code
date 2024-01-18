@@ -1,0 +1,30 @@
+@startuml sequenceDiagram
+
+actor Applicant #SkyBlue
+actor FacultyOffice #Pink
+actor JohnSmith #LawnGreen
+
+collections Application #LightCoral
+collections Shortlist #LightSeaGreen
+
+Applicant -> FacultyOffice : Application form
+activate Applicant
+
+FacultyOffice -> JohnSmith : Forwards application
+activate FacultyOffice
+
+JohnSmith -> Application : Review application
+activate JohnSmith
+
+JohnSmith -> Shortlist : Accepted applications
+JohnSmith -> Application : Application marked "Accepted"
+JohnSmith -> Application : Application marked "Rejected"
+JohnSmith -> FacultyOffice : Rejected and Accepted \napplications forwarded
+deactivate JohnSmith
+
+FacultyOffice -> Applicant : Informed of verdict \n"accepted/rejected"
+deactivate Applicant
+
+FacultyOffice -> Applicant : Successful applicant \nreceive course details
+deactivate FacultyOffice
+

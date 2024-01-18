@@ -1,0 +1,39 @@
+@startuml sequenceDiagram
+
+actor Business #SkyBlue
+participant System #LightPink
+database ActiveDonations as "Active Donations" #SeaGreen
+' participant SligoFoodExchange as "Sligo Food Exchange \nLocation" #LightYellow
+
+Business -> Business : Log in/\nRegister
+Business -> System : Submit donation form
+activate Business
+activate System
+deactivate Business
+
+group Check Donation 
+group if donation = perishable \n& if use-by-date <= 2 days from delivery date
+    System -> System : Donation is rejected: \nuse-by-date is less than \ntwo days from the donation date
+
+else if donation = perishable & if dates >= 2 days from delivery date
+    System -> System : Accept donation
+    System -> ActiveDonations : Add donation to the database
+    Activate ActiveDonations
+    Deactivate ActiveDonations
+end
+group if donation sell-by-date >= delivery date
+    System -> System : Donation is rejected: \nsell-by-date has been reached
+
+else if donation sell-by-date < delivery date
+    System -> System : Accept donation
+    System -> ActiveDonations : Add donation to the database
+    Activate ActiveDonations
+    Deactivate ActiveDonations
+end
+end
+System -> Business : Confirmation email \nwith accepted donations list
+Deactivate System
+Activate Business
+Deactivate Business
+
+@enduml

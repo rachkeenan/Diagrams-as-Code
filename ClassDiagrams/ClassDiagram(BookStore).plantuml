@@ -1,0 +1,46 @@
+@startuml classDiagram
+
+abstract class BookStore{
+    # AddToBasket()
+}
+class Account{
+    # Name
+    # Address
+    # Phone
+    # Email
+    - Register()
+    - Login()
+}
+class Book{
+    # Name
+    # Id
+    # Description 
+    # Price
+}
+class Basket{
+    # BookId
+    # BookName
+    # Quantity
+    # Price
+    - Total()
+    - Add()
+    - Remove()
+}
+class Checkout{
+    # Items
+    # Quantity
+    # TotalPrice
+    - Details()
+    - Payment()
+    - Verification()
+}
+
+BookStore "1" *-- "0..*  " Account
+BookStore *-- "0..*" Basket
+BookStore *-- "1..*" Book
+Basket "1" *-- "1 " Checkout
+Book "1" o-- "0..*  " Basket
+Account "1 "-->"1" Basket
+Account o-- Checkout
+
+@enduml

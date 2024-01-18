@@ -1,0 +1,32 @@
+@startuml stateDiagram
+
+state DoorOpen
+state DoorClosed
+state DoorOpenwithItem
+state DoorShutwithItem
+state ReadytoCook
+state Cooking
+
+[*] -> DoorClosed
+DoorClosed -> [*] : Cancel/Cancel timer
+DoorClosed ---> DoorOpen : Door opened
+DoorOpen ---> DoorClosed : Door closed
+DoorOpen ---> DoorOpenwithItem : Item placed
+DoorOpen <--- DoorOpenwithItem : Item removed
+DoorOpenwithItem ---> DoorShutwithItem : Door closed (zero time)
+DoorOpenwithItem <--- DoorShutwithItem : Door opened
+DoorShutwithItem ---> ReadytoCook : Cooking time entered \nDisplay cooking time \nUpdate cooking time
+DoorShutwithItem <--- ReadytoCook : Cancel/Cancel timer
+DoorOpenwithItem ----> ReadytoCook : Door closed time remaining
+DoorOpenwithItem <---- ReadytoCook : Door closed
+ReadytoCook -> ReadytoCook : Cooking time entered \nDisplay cooking time \nUpdate cooking time
+ReadytoCook ---> Cooking : Start \nStart time
+ReadytoCook <--- Cooking : Cancel/Stop timer
+Cooking --> DoorShutwithItem : Time Expired
+Cooking --> DoorOpenwithItem : Door opened/Stop timer
+DoorOpen --> [*] : Item removed
+
+
+
+
+

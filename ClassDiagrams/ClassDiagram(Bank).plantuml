@@ -1,0 +1,38 @@
+@startuml classDiagram{
+    skinparam classAttributeIconSize 0
+
+    class Bank {
+
+    }
+
+    class Account{
+        -name: string
+        -balance: decimal €
+
+        +deposit()
+        +withdraw()
+    }
+
+    class CurrentAccount{
+        -InsuffucientFundsFee: decimal:C
+        +processCheck()
+    }
+
+    class SavingsAccount{
+        -AnnualInterestRate : decimal:P
+        +depositMonthlyInterest()
+    }
+
+    class Customer{
+        -name: string
+        -accountNumber: int
+        +deposit()
+        +withdraw()
+    }
+
+    Bank --|>"1..*" Customer
+    Account <|-- CurrentAccount
+    Account <|-- SavingsAccount
+    Customer --"1..*" Account
+
+}

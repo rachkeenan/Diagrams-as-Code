@@ -1,0 +1,77 @@
+@startuml useCase
+
+actor Volunteer as volunteer #PaleGreen;line:LawnGreen;line.bold;
+actor Business as business #SkyBlue;line:SkyBlue;line.bold;
+actor Charity as charity #Pink;line:pink;line.bold;
+
+rectangle "Sligo Food Exchange" {
+
+  left to right direction
+
+'  Use Cases
+
+  ' "together" groups use cases
+  together {
+    usecase "Sign-in/Sign-up to account" as register #LightBlue;line:DeepPink;
+
+    usecase "Donate food items" as donate #LightBlue;line:blue;
+    usecase "Barcode scanner" as barcodeScanner #LightBlue;line:blue;
+    usecase "Accept donations" as acceptDonations #LightBlue;line:DarkGreen;
+    usecase "Reject donations" as rejectedDonations #LightBlue;line:DarkGreen;
+    usecase "Select a delivery time \n within the **Business Drop-Off Window**" as deliver #LightBlue;line:blue;
+  }
+
+  together {
+    usecase "Request food items" as request #pink;line:DeepPink;
+    usecase "Select a collection time \nafter Business Drop-Off Window" as collectDonations #pink;line:DeepPink;
+  }
+
+  together {
+    usecase "Manage donations" as manageDonations #PaleGreen;line:DarkGreen;
+    usecase "View active donations list" as viewActiveDonations #PaleGreen;line:DarkGreen;
+    usecase "Remove donation requests when collected" as removeRequest #PaleGreen;line:DarkGreen;
+    ' usecase "Distribute donations" as distributeDonations #PaleGreen;line:DarkGreen;
+    ' usecase "View and edit requests" as requestsList #PaleGreen;line:DarkGreen;
+  }
+
+    usecase "Request list" as addRequest #Yellow;line:DeepPink;
+    usecase "Active donations list" as activeDonations #Yellow;line:DeepPink;
+    
+    
+    
+  ' Relationships
+  ' Charity relationships
+  charity -- register
+  register ..> request : <<includes>>
+  charity -- request
+  ' viewActiveDonations <.. request : <<excludes>>
+  request .> addRequest : <<includes>>
+  request ...> viewActiveDonations : <<excludes>>
+  charity -- collectDonations
+  request ..> collectDonations : <<includes>>
+  
+  ' Business relationships
+  business -- register
+  register ..> donate : <<includes>>
+  business -- donate
+  donate .> acceptDonations : <<includes>>
+  donate .> rejectedDonations : <<includes>>
+  donate .> barcodeScanner : <<includes>>
+  donate ..> deliver : <<includes>>
+  ' acceptDonations ...> deliver : <<excludes>>
+  business -- deliver
+  
+  ' Volunteer relationships
+  manageDonations -- volunteer
+  viewActiveDonations -- volunteer
+  removeRequest - volunteer
+  acceptDonations ..> activeDonations : <<excludes>>
+  viewActiveDonations <.. manageDonations : <<includes>>
+  manageDonations ..> removeRequest : <<includes>>
+  viewActiveDonations ..> activeDonations : <<includes>>
+  removeRequest ..> addRequest : <<includes>>
+  ' distributeDonations -- volunteer
+  ' distributeDonations ...> collectDonations : <<includes>>
+  ' manageDonations ...> requestsList : <<includes>>
+}
+@enduml

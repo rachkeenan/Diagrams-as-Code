@@ -1,0 +1,67 @@
+@startuml classDiagram{
+    skinparam classAttributeIconSize 0
+    
+    abstract class Animal{
+        ' Attributes
+        -name: string
+        - id: int
+        - age: int
+        -weight: int
+        
+        ' Methods
+        +setName()
+        +eating()
+    }
+    
+    class Tortoise{
+        
+    }
+    
+    class Otter{
+        -whiskerLength: int
+    }
+    
+    class SlowLoris{
+
+    }
+
+    class SeaUrchin{
+
+    }
+
+    ' A group of tortoises is called a Creep
+    class Creep{
+
+    }
+
+    ' Inheritance
+    Animal <|-- Tortoise
+    Animal <|-- Otter
+    Animal <|-- SlowLoris
+
+    ' Association
+    Otter -- SeaUrchin :eats
+
+    ' Aggregation
+    Tortoise --o Creep
+
+    ' Tortoise --|> Animal
+    ' Otter --|> Animal
+    ' SlowLoris --|> Animal
+    
+    abstract class VisitorCenter{
+
+    }
+
+    class Lobby{
+
+    }
+
+    class Bathroom{
+
+    }
+
+    ' Composition
+    VisitorCenter *-- "1" Lobby
+    VisitorCenter *-- "1..*" Bathroom
+}

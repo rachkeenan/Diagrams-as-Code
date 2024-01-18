@@ -1,0 +1,44 @@
+@startuml usecase
+actor customer
+actor onlineBookStoreAdmin
+
+rectangle "Book Shop"{
+    left to right direction
+    usecase "Create Account" as register
+    usecase "Enter customer details" as customerDetails
+    usecase "Browse books" as browse
+    usecase "Add books to shopping basket" as basket
+    usecase "Login" as login
+    usecase "Customer Account" as account
+    usecase "Update account details" as update
+    usecase "Checkout" as checkout
+    usecase "Enter payment details" as cardDetails
+    usecase "Place order" as order
+    usecase "Payment verification" as verified
+    usecase "Approve order" as approved
+    usecase "Delivery Estimate" as delivery
+}
+
+customer -- register
+customer -- login
+customer -- browse
+customer -- basket
+account .. customerDetails : <<includes>>
+register .. account : <<includes>>
+login .. account : <<includes>>
+register .. login : <<extends>>
+browse .. basket : <<includes>>
+account .. update : <<includes>>
+basket .. checkout : <<includes>>
+customer -- order
+checkout .. cardDetails : <<excludes>>
+cardDetails .. order : <<includes>>
+onlineBookStoreAdmin -- verified
+onlineBookStoreAdmin -- approved 
+verified .. approved : <<includes>>
+order .. delivery : <<includes>>
+approved -- delivery : <<includes>>
+account .. cardDetails : <<excludes>>
+order .. verified : <<includes>>
+
+@enduml
